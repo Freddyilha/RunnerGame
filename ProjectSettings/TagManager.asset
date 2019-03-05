@@ -15,6 +15,7 @@ TagManager:
   - leftWall
   - rightWall
   - ignoredObject
+  - floor
   layers:
   - Default
   - TransparentFX

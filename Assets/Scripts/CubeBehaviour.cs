@@ -9,6 +9,8 @@ public class CubeBehaviour : MonoBehaviour
     private Transform characterPos;
     private Vector3 actualPosition;
     private Vector3 newPos;
+    private bool grounded;
+    [Range(0, 5)][SerializeField] private int jumpForce;
     [SerializeField] private ParticleSystem deathParticles;
     [SerializeField] private PlayerData testData;
     private PlayerPrefs playerInfo;
@@ -35,24 +37,37 @@ public class CubeBehaviour : MonoBehaviour
         {
             rgbd.MovePosition(actualPosition - new Vector3(0.1f, 0f, 0f));
         }
-        else if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            rgbd.MovePosition(actualPosition + new Vector3(0f, 0.1f, 0f));
+            //Debug.Log("cliquei");
+            //anim.Play("Jump");
+            if (grounded == true)
+            {
+                rgbd.AddForce(Vector3.up * 100 * jumpForce);
+                anim.SetTrigger("Jumped");
+                grounded = false;
+                
+            }
         }
 
     }
 
     //private void OnTriggerEnter(Collider other)
     //{
-    //    //Debug.Log("Tag: " + other.tag);
-    //    if (other.tag == "endGameTrigger")
-    //    {
-    //        EndlessRunningGameManangerBehaviour.instance.onPlayerFall();
-    //    }
+    //    Debug.Log("Tag: " + other.tag);
+    //    //if (other.tag == "endGameTrigger")
+    //    //{
+    //    //    EndlessRunningGameManangerBehaviour.instance.onPlayerFall();
+    //    //}
     //}
 
     private void OnCollisionEnter(Collision collision)
     {
+        //Debug.Log("Tag: " + collision.collider.tag);
+        if (collision.collider.tag == "floor")
+        {
+            grounded = true;
+        }
         if (collision.collider.tag == "obstacleBigWall" ||
             collision.collider.tag == "obstacleBall" ||
             collision.collider.tag == "obstacleHorizontalCylinder"

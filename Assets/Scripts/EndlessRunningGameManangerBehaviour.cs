@@ -95,14 +95,12 @@ public class EndlessRunningGameManangerBehaviour : MonoBehaviour
 
     public void addObstacleToList(GameObject newObstacle)
     {
-        // problema de reference not set
         activeObstacles.Add(newObstacle);
-        //Debug.Log("active list" + activeObstacles);
     }
 
     public void removeObstacleFromList()
     {
-        activeObstacles.RemoveAt(activeObstacles.Count -1);
+        activeObstacles.RemoveAt(0);
     }
 
     //public void onPlayerFall()
