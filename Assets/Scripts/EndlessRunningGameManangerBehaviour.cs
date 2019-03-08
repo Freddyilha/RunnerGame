@@ -15,6 +15,7 @@ public class EndlessRunningGameManangerBehaviour : MonoBehaviour
     [HideInInspector] public List<GameObject> activeObstacles;
     [SerializeField] private Canvas gameScreenCanvas;
     [SerializeField] private GameObject[] obstaclesPreFabs;
+    [SerializeField] private GameObject prepTextControl;
 
 
     void Awake()
@@ -29,7 +30,8 @@ public class EndlessRunningGameManangerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("generateObstacles", 0f, 3f);
+        prepTextControl.GetComponent<Animator>().Play("PreparationTextAnim");
+        InvokeRepeating("generateObstacles", 3f, 3f);
     }
 
     // Update is called once per frame
@@ -89,6 +91,8 @@ public class EndlessRunningGameManangerBehaviour : MonoBehaviour
         {
             Destroy(obstacleVar);
         }
+        prepTextControl.GetComponent<Animator>().Play("PreparationTextAnim");
+        InvokeRepeating("generateObstacles", 3f, 3f);
         //DestroyObject(obstacle);
         //Object.Destroy(obstacle);
     }
